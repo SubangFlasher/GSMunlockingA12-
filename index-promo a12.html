@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSM UNLOCKING A12+ - Hacker Theme</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        :root {
+            --primary: #ff0000;
+            --secondary: #8b0000;
+            --accent: #00ff00;
+            --light: #0f0;
+            --dark: #000;
+            --bg-dark: #0a0a0a;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 0, 0.1) 0%, transparent 20%);
+        }
+
+        /* Matrix rain background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Cursor follower styles */
+        .cursor-follower {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            box-shadow: 0 0 5px var(--accent);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--accent);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            animation: pulse 2s infinite;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 10px var(--primary); }
+            50% { text-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 5px var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile menu button */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            justify-content: space-between;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: titleGlow 3s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 15px var(--primary); }
+            to { text-shadow: 0 0 25px var(--primary), 0 0 35px var(--primary); }
+        }
+
+        /* Dashboard Section */
+        .dashboard-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Dashboard Section - Image Container */
+        .app-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            aspect-ratio: 1/1;
+            margin: 0 auto 2rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            animation: scan 4s infinite;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .app-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: hue-rotate(180deg) saturate(1.5);
+            transition: transform 0.3s ease;
+        }
+
+        .app-image:hover img {
+            transform: scale(1.05);
+        }
+
+        @keyframes scan {
+            0% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.8), 0 0 80px var(--primary); }
+            100% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.5); }
+        }
+
+        .download-btn {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border: 2px solid var(--accent);
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            animation: buttonPulse 2s infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8), 0 0 35px var(--primary); }
+        }
+
+        .download-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .update-log {
+            margin-top: 3rem;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .update-log h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .update-log ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .update-log li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: textReveal 0.5s ease-in;
+        }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .update-log li:last-child {
+            border-bottom: none;
+        }
+
+        .update-log li i {
+            color: var(--accent);
+            text-shadow: 0 0 5px var(--accent);
+        }
+
+        /* Reseller Section */
+        .reseller-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .reseller-card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+            animation: cardGlow 3s infinite alternate;
+        }
+
+        @keyframes cardGlow {
+            from { box-shadow: 0 0 15px rgba(0, 255, 0, 0.1); }
+            to { box-shadow: 0 0 25px rgba(0, 255, 0, 0.3); }
+        }
+
+        .reseller-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            border-color: var(--accent);
+        }
+
+        .reseller-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .reseller-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: hue-rotate(90deg);
+        }
+
+        .reseller-name {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reseller-country {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-shadow: 0 0 5px var(--accent);
+        }
+
+        .reseller-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .reseller-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .reseller-link:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            text-shadow: 0 0 5px var(--bg-dark);
+        }
+
+        /* Testimonials Section */
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            position: relative;
+            animation: testimonialGlow 4s infinite alternate;
+        }
+
+        @keyframes testimonialGlow {
+            from { box-shadow: 0 0 20px rgba(0, 255, 0, 0.2); }
+            to { box-shadow: 0 0 30px rgba(0, 255, 0, 0.4); }
+        }
+
+        .testimonial-card::before {
+            content: '>';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 3rem;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            line-height: 1;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .testimonial-content {
+            margin-top: 2rem;
+            font-style: normal;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            padding-left: 20px;
+            color: var(--light);
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+        }
+
+        .testimonial-author {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: hue-rotate(90deg);
+        }
+
+        .author-info h4 {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .testimonial-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--accent);
+        }
+
+        .testimonial-link:hover {
+            color: var(--primary);
+            text-decoration: underline;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Hacker text animation */
+        .hacker-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: hackerType 3s steps(40, end) infinite;
+        }
+
+        @keyframes hackerType {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Responsive adjustments for app image */
+        @media (max-width: 768px) {
+            .app-image {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-image {
+                max-width: 200px;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.9);
+                backdrop-filter: blur(5px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--accent);
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                text-align: center;
+                padding: 0.8rem 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+                background: var(--primary);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+                background: var(--primary);
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .reseller-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .reseller-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            main {
+                padding: 1.5rem;
+            }
+            
+            .update-log {
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            /* Hide cursor on mobile */
+            .cursor-follower, .cursor-dot {
+                display: none !important;
+            }
+        }
+
+        /* Ultra mobile */
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .download-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .reseller-card {
+                padding: 1.5rem;
+            }
+            
+            .reseller-name {
+                font-size: 1.2rem;
+            }
+            
+            nav {
+                padding: 0.8rem 1rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix rain background -->
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+
+    <!-- Cursor Followers -->
+    <div class="cursor-follower"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">GSM UNLOCKING A12+</div>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="#" class="nav-link active" data-section="dashboard">DASHBOARD</a>
+            <a href="#" class="nav-link" data-section="reseller">RESELLER</a>
+           <!-- <a href="#" class="nav-link" data-section="testimoni">TESTIMONI</a>-->
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <h2 class="section-title">A12+ No Signal</h2>
+            <div class="dashboard-content">
+                <div class="app-image">
+                    <img src="https://i.ibb.co.com/MyDcGtSz/IMG-20251211-WA0092.jpg" alt="GSM UNLOCKING A12+">
+                </div>
+                <a href="https://www.mediafire.com/file/j1sy0kc2ade08do/GSM+UNLOKING+A12+.exe/file" class="download-btn">
+                    <i class="fas fa-download"></i> DOWNLOAD HERE
+                </a>
+                
+                <div class="update-log">
+                    <h3><i class="fas fa-history"></i> UPDATE LOG NEW</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Untethered (shutdown support)</li>
+                        <li><i class="fas fa-check-circle"></i> iServices/Notifications/iPay</li>
+                        <li><i class="fas fa-check-circle"></i> iPhone XS to 16 Pro Max</li>
+                        <li><i class="fas fa-check-circle"></i> iPad 8 to iPad M3</li>
+                        <li><i class="fas fa-check-circle"></i> Fake Erase</li>
+                        <li><i class="fas fa-check-circle"></i> Disable OTA</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reseller Section -->
+        <section id="reseller" class="section">
+            <h2 class="section-title">DISTRIBUTOR</h2>
+            <div class="reseller-grid">
+                <div class="reseller-card">
+                    <div class="reseller-avatar">
+                        <img src="https://i.ibb.co.com/XfqPttp7/Blue-and-Gray-Vintage-Auto-Garage-Car-Service-Logo-20251110-002801-0000.png" alt="Ahmad Rizki">
+                    </div>
+                    <h3 class="reseller-name">GSM UNLOCKING INDONESIA</h3>
+                    <div class="reseller-country">
+                        <i class="fas fa-flag"></i>
+                        <span>INDONESIA</span>
+                    </div>
+                    <div class="reseller-links">
+                        <a href="https://wa.me/6281223742357" class="reseller-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://gsmunlockingindonesiateam.com" class="reseller-link" target="_blank">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                </div>
+
+                
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimoni" class="section">
+            <h2 class="section-title">TESTIMONI</h2>
+            <div class="testimonial-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        TOOL INI BENAR-BENAR MENGUBAH CARA SAYA BEKERJA! FITUR-FITURNYA SANGAT LENGKAP DAN MUDAH DIGUNAKAN. SAYA BISA MENYELESAIKAN TUGAS DALAM WAKTU SEPARUH DARI BIASANYA.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://placehold.co/50x50/ff0000/00ff00?text=JD" alt="John Doe">
+                        </div>
+                        <div class="author-info">
+                            <h4>JOHN DOE</h4>
+                            <p>FREELANCE DEVELOPER</p>
+                        </div>
+                    </div>
+                    <a href="https://reviews.example.com" class="testimonial-link" target="_blank">
+                        LIHAT Ulasan Lengkap →
+                    </a>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        SEBAGAI PEMILIK BISNIS KECIL, TOOL INI SANGAT MEMBANTU DALAM MENGELOLA OPERASIONAL SEHARI-HARI. SUPPORT TEAM JUGA SANGAT RESPONSIF DAN MEMBANTU!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://placehold.co/50x50/00ff00/ff0000?text=JS" alt="Jane Smith">
+                        </div>
+                        <div class="author-info">
+                            <h4>JANE SMITH</h4>
+                            <p>SMALL BUSINESS OWNER</p>
+                        </div>
+                    </div>
+                    <a href="https://reviews.example.com" class="testimonial-link" target="_blank">
+                        LIHAT Ulasan Lengkap →
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for(let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+        
+        // Handle canvas resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Mobile menu toggle functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links and sections
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Close mobile menu if open
+                if (window.innerWidth <= 768) {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Cursor follower effect (desktop only)
+        if (window.innerWidth > 768) {
+            const cursorFollower = document.querySelector('.cursor-follower');
+            const cursorDot = document.querySelector('.cursor-dot');
+            
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                
+                cursorDot.style.left = x + 'px';
+                cursorDot.style.top = y + 'px';
+                
+                cursorFollower.style.left = x + 'px';
+                cursorFollower.style.top = y + 'px';
+            });
+            
+            // Hover effects for interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .nav-link, .reseller-link, .download-btn');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                    cursorFollower.style.borderColor = '#0f0';
+                    cursorFollower.style.boxShadow = '0 0 15px #0f0';
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursorFollower.style.borderColor = '#0f0';
+                    cursorFollower.style.boxShadow = '0 0 10px #0f0';
+                });
+            });
+        }
+
+        // Handle responsive design on window resize
+        window.addEventListener('resize', () => {
+            // Resize matrix canvas
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Hide cursor followers on mobile
+            const cursorFollower = document.querySelector('.cursor-follower');
+            const cursorDot = document.querySelector('.cursor-dot');
+            
+            if (window.innerWidth <= 768) {
+                cursorFollower.style.display = 'none';
+                cursorDot.style.display = 'none';
+            } else {
+                cursorFollower.style.display = 'block';
+                cursorDot.style.display = 'block';
+                // Close mobile menu when resizing to desktop
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            }
+        });
+
+        // Fungsi untuk menyesuaikan gambar secara dinamis (opsional)
+        function adjustImageSize() {
+            const appImage = document.querySelector('.app-image');
+            const img = appImage.querySelector('img');
+            
+            // Cek dimensi gambar asli
+            const originalWidth = img.naturalWidth;
+            const originalHeight = img.naturalHeight;
+            
+            // Atur aspect ratio berdasarkan gambar asli jika tersedia
+            if (originalWidth && originalHeight) {
+                const aspectRatio = originalWidth / originalHeight;
+                appImage.style.aspectRatio = aspectRatio;
+            }
+        }
+
+        // Panggil fungsi saat gambar selesai load (opsional)
+        const appImg = document.querySelector('.app-image img');
+        if (appImg.complete) {
+            adjustImageSize();
+        } else {
+            appImg.addEventListener('load', adjustImageSize);
+        }
+
+        // Juga panggil saat window resize (opsional)
+        window.addEventListener('resize', adjustImageSize);
+    </script>
+</body>
+</html>
