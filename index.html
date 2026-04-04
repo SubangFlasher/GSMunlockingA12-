@@ -3,195 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GSM UNLOCKING A12 - Update Log</title>
+    <title>Subang Dev - Official Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-red: #ff0000;
-            --dark-red: #4a0000;
-            --glass-bg: rgba(0, 0, 0, 0.85);
-            --neon-glow: 0 0 15px rgba(255, 0, 0, 0.7);
+            --neon-red: #ff003c;
+            --neon-pink: #ff1493;
+            --bg-dark: #050505;
         }
 
-        body {
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: white;
-       
-            background: url('https://media4.giphy.com/media/v1.Y2lkPTZjMDliOTUyZHhnczAwcHNra2N0ZWZhMDFpbzc3Y2c5dDdocmJiZ3RpbGV3b3JhdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKFRdP871AR61DG/giphy.gif') no-repeat center center fixed;
-            background-size: cover;
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            overflow-x: hidden;
         }
 
-
-        nav {
+        /* Background GIF Animasi */
+        .bg-overlay {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(139, 0, 0, 0.9);
-            padding: 15px 0;
+            height: 100%;
+            z-index: -2;
+            /* Link GIF Animasi Cyberpunk */
+            background: url('https://i.gifer.com/7A4I.gif') no-repeat center center fixed;
+            background-size: cover;
+            filter: brightness(0.2) contrast(1.2);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            backdrop-filter: blur(8px);
-            border-bottom: 2px solid var(--primary-red);
         }
 
-        nav h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        /* Header Subang Dev */
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-pink);
+            margin-bottom: 0;
+            letter-spacing: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .subtitle {
+            color: var(--neon-pink);
+            letter-spacing: 3px;
+            margin-bottom: 40px;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
-
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 100px; 
-            padding-bottom: 50px;
-            min-height: 100vh;
+        /* Log Update Box */
+        .log-update {
+            background: rgba(255, 0, 60, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--neon-red);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2);
         }
 
-
-        .image-container {
-            max-width: 90%;
-            margin-bottom: 25px;
-            animation: fadeIn 1s ease-in;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: auto; 
-            max-width: 350px;
-            border: 3px solid var(--primary-red);
-            box-shadow: var(--neon-glow);
-            display: block;
-        }
-
-
-        .log-section {
-            background: var(--glass-bg);
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid var(--primary-red);
-            width: 85%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: slideUp 0.8s ease-out;
-        }
-
-        .log-section h2 {
+        .log-update h2 {
             margin-top: 0;
-            color: var(--primary-red);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #fff;
+            border-bottom: 1px solid var(--neon-pink);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .log-text {
+            text-align: left;
             font-size: 1.1rem;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 25px;
-        }
-
-        li {
-            padding: 8px 0;
-            font-size: 0.95rem;
-        }
-
-        .support-list {
-            margin-top: 5px;
-            padding-left: 20px;
-            color: #ccc;
+            line-height: 1.6;
         }
 
         .status-dot {
-            height: 8px;
-            width: 8px;
-            background-color: var(--primary-red);
+            height: 10px;
+            width: 10px;
+            background-color: #00ff00;
             border-radius: 50%;
             display: inline-block;
             margin-right: 10px;
-            box-shadow: 0 0 8px var(--primary-red);
+            box-shadow: 0 0 8px #00ff00;
         }
 
+        /* Tool Card */
+        .tool-card {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 20px;
+            border: 1px solid var(--neon-pink);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
 
-        .btn-download {
-            display: block;
+        .tool-image {
             width: 100%;
-            padding: 15px;
-            background: var(--primary-red);
-            color: white;
-            text-align: center;
+            max-width: 300px;
+            height: 180px;
+            background: #1a1a1a; /* Warna cadangan jika gambar tidak ada */
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid var(--neon-red);
+            object-fit: cover;
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        .tool-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 5px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
-            box-sizing: border-box;
+            font-size: 0.9rem;
+            display: inline-block;
         }
 
-        .btn-download:hover {
-            background: #ff3333;
-            transform: scale(1.02);
-            box-shadow: 0 0 25px var(--primary-red);
+        .btn-download {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 10px var(--neon-red);
         }
 
-        .btn-download:active {
-            transform: scale(0.98);
+        .btn-buy {
+            background: transparent;
+            border: 2px solid var(--neon-pink);
+            color: var(--neon-pink);
         }
 
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.2);
+            box-shadow: 0 0 25px var(--neon-pink);
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        footer {
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #555;
         }
+
     </style>
 </head>
 <body>
 
-    <nav>
-        <h1>GSM UNLOCKING A12</h1>
-    </nav>
+    <div class="bg-overlay"></div>
 
-    <div class="wrapper">
-        <div class="image-container">
-            <img src="https://i.ibb.co.com/MyDcGtSz/IMG-20251211-WA0092.jpg" alt="A12 Image">
-        </div>
+    <div class="container">
+        <h2>SUBANG DEV</h2>
+        <div class="subtitle">PREMIUM UNLOCKING SOLUTIONS</div>
 
-        <div class="log-section">
+        <div class="log-update">
             <h2>LOG UPDATE</h2>
-            <ul>
-                <li>
-                    <span class="status-dot"></span><strong>Wifi Only:</strong>
-                    <div class="support-list">
-                        <div>• iOS 18.7.2</div>
-                        <div>• iOS 18.5</div>
-                        <div>• iOS 26.0</div>
-                        <div>• iOS 26.1</div>
-                    </div>
-                </li>
-                <li><span class="status-dot"></span>iPhone XR - 17 Pro Max</li>
-                <li><span class="status-dot"></span>iPad 8 - iPad M4</li>
-                <li><span class="status-dot"></span>Disable OTA</li>
-                <li><span class="status-dot"></span>Fake Reset</li>
-            </ul>
-
-            <a href="https://www.mediafire.com/file/j1sy0kc2ade08do/GSM+UNLOKING+A12+.exe/file" class="btn-download" target="_blank">
-                DOWNLOAD
-            </a>
+            <div class="log-text">
+                <p><span class="status-dot"></span> Bypass iPhone 6-X (iOS 12 - 15)</p>
+                <p><span class="status-dot"></span> Bypass iPhone XR - 17 Pro Max (iOS 14 - 26.2 Beta1)</p>
+            </div>
         </div>
+
+        <div class="tool-card">
+            <img src="https://i.ibb.co.com/MyDcGtSz/IMG-20251211-WA0092.jpg" alt="GSM UNLOCKING A12" class="tool-image">
+            <div class="tool-title">GSM UNLOCKING A12</div>
+            <div class="btn-group">
+                <a href="https://www.mediafire.com/file/j1sy0kc2ade08do/GSM+UNLOKING+A12+.exe/file" class="btn btn-download">Download</a>
+                <a href="https://gsmunlockingindonesiateam.com/service/gsm-unlocking-a12" class="btn btn-buy">Membeli Produk</a>
+            </div>
+        </div>
+
+        <div class="tool-card">
+            <img src="https://dnuativador.com/icone1.png" alt="DNU ACTIVATOR A12" class="tool-image">
+            <div class="tool-title">DNU ACTIVATOR A12</div>
+            <div class="btn-group">
+                <a href="https://www.mediafire.com/file/ydw4qzn5m3wxh5f/DNU-Activator.exe/file" class="btn btn-download">Download</a>
+                <a href="https://gsmunlockingindonesiateam.com/group/dnu-activator" class="btn btn-buy">Membeli Produk</a>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2026 Subang Dev. All Rights Reserved.
+        </footer>
     </div>
 
 </body>
