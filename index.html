@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,220 +6,303 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subang Dev - Official Website</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --neon-red: #ff003c;
             --neon-pink: #ff1493;
             --bg-dark: #050505;
+            --glass: rgba(20, 20, 20, 0.9);
         }
 
-        * {
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
 
         body, html {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Rajdhani', sans-serif;
             background-color: var(--bg-dark);
             color: #fff;
             overflow-x: hidden;
         }
 
-        /* Background GIF Animasi */
+        /* --- Animasi Hujan Merah --- */
         .bg-overlay {
             position: fixed;
-            top: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background-color: #050505;
+            overflow: hidden;
+        }
+
+        .rain {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent;
+        }
+
+        /* Membuat tetesan hujan menggunakan CSS murni */
+        .rain::after {
+            content: "";
+            position: absolute;
+            top: -100%;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-            /* Link GIF Animasi Cyberpunk */
-            background: url('https://i.gifer.com/7A4I.gif') no-repeat center center fixed;
-            background-size: cover;
-            filter: brightness(0.2) contrast(1.2);
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 90%,
+                var(--neon-red) 90%,
+                var(--neon-red) 99%,
+                transparent 100%
+            );
+            /* Ukuran tetesan: 1px lebar, 100px tinggi */
+            background-size: 1px 120px;
+            /* Posisi jatuhnya tetesan secara acak di layar */
+            background-position: 5% 0%, 15% 10%, 25% 40%, 35% 20%, 50% 50%, 65% 15%, 80% 30%, 95% 10%;
+            animation: rainAnimation 0.8s linear infinite;
+            filter: drop-shadow(0 0 3px var(--neon-red));
+            opacity: 0.5;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-            text-align: center;
+        @keyframes rainAnimation {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(120px); } /* Sesuai dengan ukuran background-size */
         }
 
-        /* Header Subang Dev */
-        h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-pink);
-            margin-bottom: 0;
-            letter-spacing: 8px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .subtitle {
-            color: var(--neon-pink);
-            letter-spacing: 3px;
-            margin-bottom: 40px;
-            font-weight: bold;
-        }
-
-        /* Log Update Box */
-        .log-update {
-            background: rgba(255, 0, 60, 0.1);
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--neon-red);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 0 15px rgba(255, 0, 60, 0.2);
+            border-bottom: 2px solid var(--neon-red);
+            padding: 10px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            height: 70px;
         }
 
-        .log-update h2 {
-            margin-top: 0;
+        .nav-logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: #fff;
-            border-bottom: 1px solid var(--neon-pink);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .log-text {
-            text-align: left;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            background-color: #00ff00;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 10px;
-            box-shadow: 0 0 8px #00ff00;
-        }
-
-        /* Tool Card */
-        .tool-card {
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 20px;
-            border: 1px solid var(--neon-pink);
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .tool-image {
-            width: 100%;
-            max-width: 300px;
-            height: 180px;
-            background: #1a1a1a; /* Warna cadangan jika gambar tidak ada */
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 2px solid var(--neon-red);
-            object-fit: cover;
-            box-shadow: 0 0 15px var(--neon-red);
-        }
-
-        .tool-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 12px 20px;
-            border-radius: 10px;
-            text-decoration: none;
+            font-size: 1.4rem; color: var(--neon-red);
+            text-decoration: none; text-shadow: 0 0 10px var(--neon-red);
             font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            display: inline-block;
         }
 
-        .btn-download {
-            background: var(--neon-red);
-            color: white;
-            box-shadow: 0 0 10px var(--neon-red);
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .menu-toggle span { width: 30px; height: 3px; background: var(--neon-red); border-radius: 5px; box-shadow: 0 0 5px var(--neon-red); }
+
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            color: #fff; text-decoration: none; font-size: 0.9rem;
+            font-family: 'Orbitron', sans-serif; text-transform: uppercase;
         }
 
-        .btn-buy {
-            background: transparent;
-            border: 2px solid var(--neon-pink);
-            color: var(--neon-pink);
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .nav-links {
+                position: absolute; top: 70px; left: -100%;
+                width: 100%; height: calc(100vh - 70px);
+                background: rgba(5, 5, 5, 0.98);
+                flex-direction: column; align-items: center;
+                justify-content: center; gap: 40px; transition: 0.5s;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links a { font-size: 1.5rem; }
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.2);
-            box-shadow: 0 0 25px var(--neon-pink);
-        }
+        /* --- Page Content --- */
+        .page { display: none; padding: 100px 20px 40px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        footer {
-            margin-top: 50px;
-            font-size: 0.8rem;
-            color: #555;
-        }
+        .glass-card { background: var(--glass); border: 1px solid var(--neon-red); border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(255, 0, 60, 0.1); }
+        
+        /* --- Support List (Accordion) --- */
+        details { background: rgba(255, 255, 255, 0.05); margin-bottom: 10px; border-radius: 8px; border-left: 3px solid var(--neon-red); }
+        summary { padding: 12px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::after { content: ''; font-size: 0.8rem; color: var(--neon-pink); }
+        details[open] summary::after { content: ''; }
+        .ios-list { padding: 10px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; background: rgba(0, 0, 0, 0.3); font-size: 0.9rem; color: #ccc; }
 
+        /* --- Reseller Profil --- */
+        .reseller-card { text-align: center; background: rgba(255,255,255,0.03); border-radius: 20px; padding: 30px; border: 1px solid #333; }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--neon-red); margin-bottom: 15px; object-fit: cover; box-shadow: 0 0 15px var(--neon-red); }
+        .sosmed-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .sosmed-links a { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #222; color: #fff; text-decoration: none; font-size: 1.3rem; }
+        .sosmed-links a.wa:hover { background: #25d366; box-shadow: 0 0 10px #25d366; }
+        .sosmed-links a.tg:hover { background: #0088cc; box-shadow: 0 0 10px #0088cc; }
+        .sosmed-links a.fb:hover { background: #1877f2; box-shadow: 0 0 10px #1877f2; }
+        .sosmed-links a.web:hover { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
+
+        .btn-download { background: var(--neon-red); color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-family: 'Orbitron'; display: inline-block; margin-top: 10px; font-weight: bold; }
+        
+        footer { text-align: center; padding: 40px; color: #555; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
-
-    <div class="container">
-        <h2>SUBANG DEV</h2>
-        <div class="subtitle">PREMIUM UNLOCKING SOLUTIONS</div>
-
-        <div class="log-update">
-            <h2>LOG UPDATE</h2>
-            <div class="log-text">
-                <p><span class="status-dot"></span> Bypass iPhone 6-X (iOS 12 - 15)</p>
-                <p><span class="status-dot"></span> Bypass iPhone XR - 17 Pro Max (iOS 14 - 26.2 Beta1)</p>
-            </div>
-        </div>
-
-        <div class="tool-card">
-            <img src="https://i.ibb.co.com/MyDcGtSz/IMG-20251211-WA0092.jpg" alt="GSM UNLOCKING PREMIUM" class="tool-image">
-            <div class="tool-title">GSM UNLOCKING A12</div>
-            <div class="btn-group">
-                <a href="https://www.mediafire.com/folder/cgv7evgqcpsln/GSM+UNLOCKING" class="btn btn-download">Download</a>
-                <a href="https://gsmunlockingindonesiateam.com/service/gsm-unlocking-a12" class="btn btn-buy">Membeli Produk</a>
-            </div>
-        </div>
-
-        <div class="tool-card">
-            <img src="https://dnuativador.com/icone1.png" alt="DNU ACTIVATOR A12" class="tool-image">
-            <div class="tool-title">DNU ACTIVATOR A12</div>
-            <div class="btn-group">
-                <a href="https://www.mediafire.com/file/ydw4qzn5m3wxh5f/DNU-Activator.exe/file" class="btn btn-download">Download</a>
-                <a href="https://gsmunlockingindonesiateam.com/group/dnu-activator" class="btn btn-buy">Membeli Produk</a>
-            </div>
-        </div>
-
-        <footer>
-            &copy; 2026 Subang Dev. All Rights Reserved.
-        </footer>
+    <div class="bg-overlay">
+        <div class="rain"></div>
     </div>
 
+    <nav>
+        <a href="#" class="nav-logo" onclick="showPage('home')">SUBANG DEV</a>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="javascript:void(0)" onclick="showPage('home')">Home</a>
+            <a href="javascript:void(0)" onclick="showPage('support')">Support Models</a>
+            <a href="javascript:void(0)" onclick="showPage('reseller')">Reseller</a>
+        </div>
+    </nav>
+
+    <div id="home" class="page active">
+        <h1 style="text-align: center; font-family: 'Orbitron'; text-shadow: 0 0 15px var(--neon-red);">OFFICIAL TOOLS</h1>
+        <div class="glass-card" style="text-align: center;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJ3uKwMdtHy532z8CvLxPJulBGSvCoIREZKUTNhaBzUkC0DwQLh51rUuS9KY3S8tQZVMZzWGU75NkehjCnZc4YcdRloVJtYahBKt6np_RD1TQpRjiBufSOjD7Ngfvu9ucMqhNNvGTd12NzsYtt9EZFGsO-zg9ZE6jgSAtbuUcsHhmybAEeS4ZdXTX0MNU/s643/IMG_20260424_220225_407.jpg" alt="GSM" style="width:100%; max-width:400px; border-radius:10px; margin-bottom:15px; border: 1px solid var(--neon-red);">
+            <h3>GSM UNLOCKING PREMIUM</h3>
+            <a href="https://www.mediafire.com/folder/cgv7evgqcpsln/GSM+UNLOCKING" class="btn-download">Download</a>
+        </div>
+        <div class="glass-card" style="text-align: center;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrVxRl_q6Gn85Sljjm0jhXOxMLCtNVg7uh-wy6Ua0stMWt7L09n9U7bnTS1KYR88edyPpGT2KmbSVMPykg4ANWXOwY4EX2HykmbkRikbma4kJdhli_siCB1DcNUq_w-jL5lIZYc11ZD6YGutjKZm7NZ3Osd1lzhHijhWgLxEI2UYy55j35EFWEuMINHA8/s678/IMG_20260424_220213_929.jpg" alt="GSM" style="width:100%; max-width:400px; border-radius:10px; margin-bottom:15px; border: 1px solid var(--neon-red);">
+            <h3>DNU ACTIVATOR</h3>
+            <a href="https://www.mediafire.com/file/ydw4qzn5m3wxh5f/DNU-Activator.exe/file" class="btn-download">Download</a>
+        </div>
+        <div class="glass-card" style="text-align: center;">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVWKAg4EvxoXIEFEosfZmTxWXJynPBgXqSzetwFSeWMJkmTk2eqjEqG3-5Oa1v7925vcLCKIy9N2MM5LBdtXVqsk4eCdG3XqTO7602ReL0bzfzW5vu0ssLSw4fkN77h6LyAC5T-jhMnsbAmKGvoyIPqarsb3FPVjlx6LRBjl-kdCpFFeCgReDCymTYmPA/s626/IMG_20260424_220208_763.jpg" alt="GSM" style="width:100%; max-width:400px; border-radius:10px; margin-bottom:15px; border: 1px solid var(--neon-red);">
+            <h3>RONDO PIRANG A5 - A6</h3>
+            <a href="https://mega.nz/file/J0pRCQjC#6kNqjZibENAIfvcopW4Gc6p5f9filQOWYAYH9_Z8HOQ" class="btn-download">Download</a>
+        </div>
+    </div>
+
+    <div id="support" class="page">
+        <h1 style="text-align: center; font-family: 'Orbitron';">SUPPORTED MODELS</h1>
+        <div class="glass-card">
+            <details>
+                <summary>A5 ( IPHONE 4 - 4S - TOUCH 5 - MINI 1 - IPAD 2 - 3 )</summary>
+                <div class="ios-list"><div class="ios-item">LAST IOS</div></div>
+            </details>
+            <details>
+                <summary>A6 ( IPHONE 5 - 5C )</summary>
+                <div class="ios-list"><div class="ios-item">LAST IOS</div></div>
+            </details>
+            <details>
+                <summary>iPhone 6S</summary>
+                <div class="ios-list"><div class="ios-item">15.7.2</div><div class="ios-item">15.8.5</div></div>
+            </details>
+            <details>
+                <summary>iPhone 6S Plus</summary>
+                <div class="ios-list"><div class="ios-item">15.8</div><div class="ios-item">15.8.5</div></div>
+            </details>
+            <details>
+                <summary>iPhone 7</summary>
+                <div class="ios-list"><div class="ios-item">15.8</div><div class="ios-item">15.8.2</div><div class="ios-item">15.8.3</div><div class="ios-item">15.8.5</div><div class="ios-item">15.8.6</div></div>
+            </details>
+            <details>
+                <summary>iPhone 7 Plus</summary>
+                <div class="ios-list"><div class="ios-item">15.3.1</div><div class="ios-item">15.8</div><div class="ios-item">15.8.4</div><div class="ios-item">15.8.5</div><div class="ios-item">15.8.6</div></div>
+            </details>
+            <details>
+                <summary>iPhone 8</summary>
+                <div class="ios-list"><div class="ios-item">13.2.3</div><div class="ios-item">16.4</div><div class="ios-item">16.7</div><div class="ios-item">16.7.12</div><div class="ios-item">16.7.14</div></div>
+            </details>
+            <details>
+                <summary>iPhone 8 Plus</summary>
+                <div class="ios-list"><div class="ios-item">16.5.1</div><div class="ios-item">16.7.8</div><div class="ios-item">16.7.11</div><div class="ios-item">16.7.12</div><div class="ios-item">16.7.14</div></div>
+            </details>
+            <details>
+                <summary>iPhone X</summary>
+                <div class="ios-list"><div class="ios-item">16.7</div><div class="ios-item">16.7.10</div><div class="ios-item">16.7.11</div><div class="ios-item">16.7.12</div><div class="ios-item">16.7.14</div></div>
+            </details>
+            <details>
+                <summary>iPhone SE 2 - 3</summary>
+                <div class="ios-list"><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone XR</summary>
+                <div class="ios-list"><div class="ios-item">15.2.1</div><div class="ios-item">15.3.1</div><div class="ios-item">16.3</div><div class="ios-item">16.3.1</div><div class="ios-item">16.5</div><div class="ios-item">16.5.1</div><div class="ios-item">16.6</div><div class="ios-item">16.6.1</div><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div></div>
+            </details>
+            <details>
+                <summary>iPhone XS - XS MAX</summary>
+                <div class="ios-list"><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div></div>
+            </details>
+            <details>
+                <summary>iPhone 11</summary>
+                <div class="ios-list"><div class="ios-item">15.0</div><div class="ios-item">16.4</div><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 11 PRO - 11 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 12 - 12 MINI - 12 PRO - 12 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 13 - 13 PRO - 13 MINI</summary>
+                <div class="ios-list"><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 13 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">16.2</div><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 14 - 14 PLUS - 14 PRO - 14 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">17.0</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 15 - 15 PLUS - 15 PRO - 15 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">17.1</div><div class="ios-item">17.1</div><div class="ios-item">17.1.1</div><div class="ios-item">17.1.2</div><div class="ios-item">17.2</div><div class="ios-item">17.2.1</div><div class="ios-item">17.3</div><div class="ios-item">17.3.1</div><div class="ios-item">17.4</div><div class="ios-item">17.4.1</div><div class="ios-item">17.5</div><div class="ios-item">17.5.1</div><div class="ios-item">17.6</div><div class="ios-item">17.6.1</div><div class="ios-item">17.7</div><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 16 - 16 PLUS - 16 PRO - 16 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">18.0</div><div class="ios-item">18.1</div><div class="ios-item">18.1.1</div><div class="ios-item">18.2</div><div class="ios-item">18.2.1</div><div class="ios-item">18.3</div><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">18.7</div><div class="ios-item">18.7.1</div><div class="ios-item">18.7.2</div><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 16e</summary>
+                <div class="ios-list"><div class="ios-item">18.3.1</div><div class="ios-item">18.3.2</div><div class="ios-item">18.4</div><div class="ios-item">18.4.1</div><div class="ios-item">18.5</div><div class="ios-item">18.6</div><div class="ios-item">18.6.1</div><div class="ios-item">18.6.2</div><div class="ios-item">26.1</div></div>
+            </details>
+            <details>
+                <summary>iPhone 17 - 17 PLUS - 17 PRO - 17 PRO MAX</summary>
+                <div class="ios-list"><div class="ios-item">26.0</div><div class="ios-item">26.1</div></div>
+            </details>
+        </div>
+    </div>
+
+    <div id="reseller" class="page">
+        <h1 style="text-align: center; font-family: 'Orbitron';">OFFICIAL RESELLER</h1>
+        <div class="reseller-card">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhYG0MojCf7jjkfVWv9JloZ9M5qu4S1rwPDMHf14g-unjm18bosQLuHguONzGNXUrarXOS9AZBCQbduQ2qTQwwtXSfGRhhYQvVGjpZbiUqcCTou4IjAZYt3c9VDY3xfUPchQg8rQtjsu3IRDNhOtL_neG4EBeNeY2Wu029L2y4a4sVcZBlp79uanW6cUE/s1440/IMG_20260108_101423_037.webp" alt="Admin Subang" class="profile-img">
+            <div style="font-family: 'Orbitron'; font-size: 1.5rem;">SUBANG DEV ADMIN</div>
+            <p style="color: var(--neon-pink); font-weight: bold;">Verified Distributor</p>
+            <div class="sosmed-links">
+                <a href="https://wa.me/6281223742357" class="wa"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/Badakservice26" class="tg"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://www.facebook.com/share/1DdreXRm8p/" class="fb"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://gsmunlockingindonesiateam.com" class="web"><i class="fas fa-globe"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Subang Dev. High-End Mobile Solutions.
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('navLinks').classList.remove('active');
+            window.scrollTo(0,0);
+        }
+    </script>
 </body>
 </html>
+
