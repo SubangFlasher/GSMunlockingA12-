@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -25,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* --- Animasi Hujan Merah --- */
+       
         .bg-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -40,7 +39,6 @@
             background: transparent;
         }
 
-        /* Membuat tetesan hujan menggunakan CSS murni */
         .rain::after {
             content: "";
             position: absolute;
@@ -56,9 +54,7 @@
                 var(--neon-red) 99%,
                 transparent 100%
             );
-            /* Ukuran tetesan: 1px lebar, 100px tinggi */
             background-size: 1px 120px;
-            /* Posisi jatuhnya tetesan secara acak di layar */
             background-position: 5% 0%, 15% 10%, 25% 40%, 35% 20%, 50% 50%, 65% 15%, 80% 30%, 95% 10%;
             animation: rainAnimation 0.8s linear infinite;
             filter: drop-shadow(0 0 3px var(--neon-red));
@@ -67,10 +63,10 @@
 
         @keyframes rainAnimation {
             0% { transform: translateY(0); }
-            100% { transform: translateY(120px); } /* Sesuai dengan ukuran background-size */
+            100% { transform: translateY(120px); }
         }
 
-        /* --- Navigation --- */
+       
         nav {
             position: fixed; top: 0; width: 100%;
             background: rgba(0, 0, 0, 0.95);
@@ -111,21 +107,21 @@
             .nav-links a { font-size: 1.5rem; }
         }
 
-        /* --- Page Content --- */
+       
         .page { display: none; padding: 100px 20px 40px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .glass-card { background: var(--glass); border: 1px solid var(--neon-red); border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 0 15px rgba(255, 0, 60, 0.1); }
         
-        /* --- Support List (Accordion) --- */
+        
         details { background: rgba(255, 255, 255, 0.05); margin-bottom: 10px; border-radius: 8px; border-left: 3px solid var(--neon-red); }
         summary { padding: 12px; cursor: pointer; font-weight: bold; font-family: 'Orbitron', sans-serif; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        summary::after { content: ''; font-size: 0.8rem; color: var(--neon-pink); }
-        details[open] summary::after { content: ''; }
+        summary::after { content: '\f107'; font-family: 'Font Awesome 5 Free'; font-weight: 900; font-size: 0.8rem; color: var(--neon-pink); }
+        details[open] summary::after { content: '\f106'; }
         .ios-list { padding: 10px 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; background: rgba(0, 0, 0, 0.3); font-size: 0.9rem; color: #ccc; }
 
-        /* --- Reseller Profil --- */
+        
         .reseller-card { text-align: center; background: rgba(255,255,255,0.03); border-radius: 20px; padding: 30px; border: 1px solid #333; }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--neon-red); margin-bottom: 15px; object-fit: cover; box-shadow: 0 0 15px var(--neon-red); }
         .sosmed-links { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
@@ -135,8 +131,18 @@
         .sosmed-links a.fb:hover { background: #1877f2; box-shadow: 0 0 10px #1877f2; }
         .sosmed-links a.web:hover { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
 
-        .btn-download { background: var(--neon-red); color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-family: 'Orbitron'; display: inline-block; margin-top: 10px; font-weight: bold; }
         
+        .btn-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .btn-download { background: var(--neon-red); color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-family: 'Orbitron'; font-weight: bold; display: inline-block; box-shadow: 0 0 10px rgba(255,0,60,0.4); }
+        .btn-download:hover { background: #cc0030; box-shadow: 0 0 15px var(--neon-red); }
+        
+        .btn-price { background: rgba(0, 0, 0, 0.6); color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 8px; font-family: 'Rajdhani'; font-weight: bold; border: 1px solid #444; display: inline-block; font-size: 1rem; }
+        .btn-price.reg { border-color: var(--neon-pink); color: var(--neon-pink); }
+        .btn-price.remote { border-color: #00bfff; color: #00bfff; }
+        
+        .promo-text { font-family: 'Rajdhani'; color: #ff007f; font-weight: bold; margin-top: 15px; font-size: 1rem; text-shadow: 0 0 5px rgba(255,20,147,0.3); }
+        .promo-text a { color: #fff; text-decoration: underline; }
+
         footer { text-align: center; padding: 40px; color: #555; font-size: 0.8rem; }
     </style>
 </head>
@@ -160,20 +166,41 @@
 
     <div id="home" class="page active">
         <h1 style="text-align: center; font-family: 'Orbitron'; text-shadow: 0 0 15px var(--neon-red);">OFFICIAL TOOLS</h1>
+        
+        
         <div class="glass-card" style="text-align: center;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJ3uKwMdtHy532z8CvLxPJulBGSvCoIREZKUTNhaBzUkC0DwQLh51rUuS9KY3S8tQZVMZzWGU75NkehjCnZc4YcdRloVJtYahBKt6np_RD1TQpRjiBufSOjD7Ngfvu9ucMqhNNvGTd12NzsYtt9EZFGsO-zg9ZE6jgSAtbuUcsHhmybAEeS4ZdXTX0MNU/s643/IMG_20260424_220225_407.jpg" alt="GSM" style="width:100%; max-width:400px; border-radius:10px; margin-bottom:15px; border: 1px solid var(--neon-red);">
             <h3>GSM UNLOCKING PREMIUM</h3>
-            <a href="https://www.mediafire.com/folder/cgv7evgqcpsln/GSM+UNLOCKING" class="btn-download">Download</a>
+            <div class="btn-group">
+                <a href="https://www.mediafire.com/folder/cgv7evgqcpsln/GSM+UNLOCKING" class="btn-download"><i class="fas fa-download"></i> Download</a>
+                <a href="https://gsmunlockingindonesiateam.com" target="_blank" class="btn-price reg">Registrasi: Rp 100.000</a>
+                <a href="https://wa.me/6281223742357" target="_blank" class="btn-price remote">Remote: Rp 150.000</a>
+            </div>
+            <p class="promo-text"><i class="fas fa-percentage"></i> Lebih Murah Registrasi Via Website (<a href="https://gsmunlockingindonesiateam.com" target="_blank">Gsmunlockingindonesiateam.com</a>)</p>
         </div>
+
+        
         <div class="glass-card" style="text-align: center;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhrVxRl_q6Gn85Sljjm0jhXOxMLCtNVg7uh-wy6Ua0stMWt7L09n9U7bnTS1KYR88edyPpGT2KmbSVMPykg4ANWXOwY4EX2HykmbkRikbma4kJdhli_siCB1DcNUq_w-jL5lIZYc11ZD6YGutjKZm7NZ3Osd1lzhHijhWgLxEI2UYy55j35EFWEuMINHA8/s678/IMG_20260424_220213_929.jpg" alt="GSM" style="width:100%; max-width:400px; border-radius:10px; margin-bottom:15px; border: 1px solid var(--neon-red);">
             <h3>DNU ACTIVATOR</h3>
-            <a href="https://www.mediafire.com/file/ydw4qzn5m3wxh5f/DNU-Activator.exe/file" class="btn-download">Download</a>
+            <div class="btn-group">
+                <a href="https://www.mediafire.com/file/ydw4qzn5m3wxh5f/DNU-Activator.exe/file" class="btn-download"><i class="fas fa-download"></i> Download</a>
+                <a href="https://gsmunlockingindonesiateam.com" target="_blank" class="btn-price reg">Registrasi: Rp 100.000</a>
+                <a href="https://wa.me/6281223742357" target="_blank" class="btn-price remote">Remote: Rp 150.000</a>
+            </div>
+            <p class="promo-text"><i class="fas fa-percentage"></i> Lebih Murah Registrasi Via Website (<a href="https://gsmunlockingindonesiateam.com" target="_blank">Gsmunlockingindonesiateam.com</a>)</p>
         </div>
+
+        
         <div class="glass-card" style="text-align: center;">
             <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVWKAg4EvxoXIEFEosfZmTxWXJynPBgXqSzetwFSeWMJkmTk2eqjEqG3-5Oa1v7925vcLCKIy9N2MM5LBdtXVqsk4eCdG3XqTO7602ReL0bzfzW5vu0ssLSw4fkN77h6LyAC5T-jhMnsbAmKGvoyIPqarsb3FPVjlx6LRBjl-kdCpFFeCgReDCymTYmPA/s626/IMG_20260424_220208_763.jpg" alt="GSM" style="width:100%; max-width:400px; border-radius:10px; margin-bottom:15px; border: 1px solid var(--neon-red);">
             <h3>RONDO PIRANG A5 - A6</h3>
-            <a href="https://mega.nz/file/BoUyQDYC#FsUy5lumVAQEZ4n0Evn-RLckZi9CbVU_hvxk90Yjgmc" class="btn-download">Download</a>
+            <div class="btn-group">
+                <a href="https://mega.nz/file/BoUyQDYC#FsUy5lumVAQEZ4n0Evn-RLckZi9CbVU_hvxk90Yjgmc" class="btn-download"><i class="fas fa-download"></i> Download</a>
+                <a href="https://gsmunlockingindonesiateam.com" target="_blank" class="btn-price reg">Registrasi: Rp 45.000</a>
+                <a href="https://wa.me/6281223742357" target="_blank" class="btn-price remote">Remote: Rp 80.000</a>
+            </div>
+            <p class="promo-text"><i class="fas fa-percentage"></i> Lebih Murah Registrasi Via Website (<a href="https://gsmunlockingindonesiateam.com" target="_blank">Gsmunlockingindonesiateam.com</a>)</p>
         </div>
     </div>
 
@@ -305,4 +332,3 @@
     </script>
 </body>
 </html>
-
